@@ -1,0 +1,55 @@
+time2string:
+	addi s1, zero, 0x0
+	andi s2, a1,   0xf
+	addi s3, zero, 0x2
+	addi s4, zero, 0x4
+	addi s5, zero, 0x0
+	andi t6, s2,  0xf
+om:	
+	PUSH ra
+	jal hex2asc
+	POP ra
+	PUSH t6
+	
+	srli a1, a1, 0x4
+	andi t6, a1, 0xf
+	
+	addi s1, s1, 1
+	
+	beq s3, s1, halv
+	beq s4, s1, t2s_klar
+	
+	j om
+halv:
+	addi t6, zero, 0x3A
+	PUSH t6
+	andi t6, a1, 0xf
+	
+	j om
+t2s_klar:	
+
+	POP t6
+	sb t6, (a0)
+	
+	addi a0 ,a0, 1
+	POP t6
+	sb t6, (a0)
+	
+	addi a0 ,a0, 1
+	POP t6
+	sb t6, (a0)
+	
+	addi a0 ,a0, 1
+	POP t6
+	sb t6, (a0)
+	
+	addi a0 ,a0, 1
+	POP t6
+	sb t6, (a0)
+	
+	addi a0 ,a0, 1
+	addi t6, zero, 0x00
+	sb t6, (a0)
+	addi a0,a0,-5
+
+	jr ra
